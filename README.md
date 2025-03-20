@@ -1,4 +1,6 @@
 
+---
+
 # Personal Finance API
 
 A Flask-based REST API for managing personal finances using double-entry bookkeeping principles.
@@ -79,6 +81,7 @@ Run the following command to enter the PostgreSQL interactive shell as the `post
 ```bash
 psql -U postgres
 ```
+*Note*: You may be prompted to enter the password for the `postgres` user if authentication is configured.
 
 ### Step 2: Create a New User
 Inside the `psql` shell, create a new database user:
@@ -94,8 +97,12 @@ GRANT ALL PRIVILEGES ON DATABASE flask_database_2 TO flask_user;
 ALTER DATABASE flask_database_2 OWNER TO flask_user;
 ```
 
-### Step 4: Exit PostgreSQL
-Type `\q` to exit the `psql` shell.
+### Step 4: Exit the PostgreSQL Shell
+Exit the `psql` shell by running:
+```sql
+\q
+```
+This will return you to your terminal.
 
 ### Step 5: Set Up the `.env` File
 Create a `.env` file in your project directory and add the Database URL:
