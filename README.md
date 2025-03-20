@@ -1,5 +1,3 @@
-Here's the updated `README.md` with "Step 6: Load Environment Variables" removed, since `python-dotenv` is assumed to be in `requirements.txt`:
-
 ---
 
 # Personal Finance API
