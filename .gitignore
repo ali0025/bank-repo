@@ -1,0 +1,24 @@
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Environment variables
+.env
+
+# Byte-compiled and cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest cache
+.pytest_cache/
+
+# Dependencies
+*.log
+*.db
+
+# IDE/editor specific files
+.vscode/
+.idea/
