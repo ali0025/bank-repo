@@ -1,4 +1,4 @@
----
+
 
 # Personal Finance API
 
@@ -125,6 +125,3 @@ Run the tests using pytest:
 pytest
 ```
 
----
-
-The "Step 6: Load Environment Variables" section has been removed, and the subsequent step has been renumbered accordingly. Let me know if you need any more changes!
