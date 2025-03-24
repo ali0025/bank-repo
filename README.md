@@ -1,4 +1,4 @@
-# Personal Finance API
+# FinTrack API
 
 ## Overview
 
