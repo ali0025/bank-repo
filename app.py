@@ -1,6 +1,7 @@
 from flask import Flask
 from config import Config
 from extensions import db
+import os
 # Register blueprints
 from routes import account_bp, transaction_bp, user_bp
 
@@ -13,8 +14,17 @@ from routes import account_bp, transaction_bp, user_bp
 app.register_blueprint(user_bp, url_prefix="/users")
 app.register_blueprint(account_bp, url_prefix="/accounts")
 app.register_blueprint(transaction_bp, url_prefix="/transactions")
+# Add a root route
+@app.route('/')
+def home():
+    return {"message": "Welcome to the Flask API!"}, 200
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()  # Create tables
-    app.run(debug=True)
+        try:
+            db.create_all()
+            print("Database tables created successfully")
+        except Exception as e:
+            print(f"Error creating tables: {e}")
+    debug = os.getenv('FLASK_DEBUG') == 'development'
+    app.run(host="0.0.0.0", port=5000, debug=debug)
