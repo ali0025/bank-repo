@@ -1,136 +1,123 @@
-
----
-
 # Personal Finance API
-
-A Flask-based REST API for managing personal finances using double-entry bookkeeping principles.
 
 ## Overview
 
-This application provides a robust API for tracking personal finances through a double-entry bookkeeping system. It allows users to create accounts, record transactions between accounts, and maintain balanced financial records.
+This Flask-based REST API provides a robust solution for managing personal finances using double-entry bookkeeping principles. Designed to run in a Docker container, the application offers comprehensive financial tracking with user and account management, transaction recording, and automated balance calculations.
 
 ## Features
 
-- **User Management**: Create, retrieve, update, and delete user profiles.
-- **Account Management**: Create and manage financial accounts for each user.
-- **Double-Entry Transactions**: Record financial transactions with balanced debits and credits.
-- **RESTful API**: Full CRUD operations via HTTP endpoints.
-- **Automated Balance Calculation**: Account balances calculated dynamically from transaction entries.
+- **User Management**: Create, retrieve, update, and delete user profiles
+- **Account Management**: Create and manage financial accounts for each user
+- **Double-Entry Transactions**: Record financial transactions with balanced debits and credits
+- **RESTful API**: Full CRUD operations via HTTP endpoints
+- **Automated Balance Calculation**: Dynamically calculate account balances from transaction entries
 
 ## Technical Stack
 
 - **Framework**: Flask 2.2.5
 - **Database ORM**: SQLAlchemy 1.4.49 (via Flask-SQLAlchemy)
-- **Database**: PostgreSQL (via psycopg2)
+- **Database**: PostgreSQL
 - **Testing**: pytest
-- **Configuration**: Environment variables via python-dotenv
+- **Containerization**: Docker
 
-## Data Model
+## Prerequisites
 
-- **User**: Represents a user of the system.
-- **Account**: Financial account owned by a user (e.g., checking, savings, credit card).
-- **Transaction**: Record of financial activity with balanced debit and credit entries.
-- **TransactionEntry**: Individual debit or credit entry linked to an account and transaction.
+- Docker Desktop
+- Git
 
-## API Endpoints
+## Installation and Setup
 
-### Users
-- `POST /users/` - Create a new user.
-- `GET /users/` - List all users.
-- `GET /users/<id>` - Get user details.
-- `PUT /users/<id>` - Update user information.
-- `DELETE /users/<id>` - Delete a user.
+### 1. Clone the Repository
 
-### Accounts
-- `POST /accounts/` - Create a new account.
-- `GET /accounts/` - List all accounts.
-- `GET /accounts/<id>` - Get account details with current balance.
-- `PUT /accounts/<id>` - Update account information.
-- `DELETE /accounts/<id>` - Delete an account.
-
-### Transactions
-- `POST /transactions/` - Create a new transaction with entries.
-- `GET /transactions/` - List all transactions.
-- `GET /transactions/<id>` - Get transaction details with entries.
-- `PUT /transactions/<id>` - Update transaction description.
-- `DELETE /transactions/<id>` - Delete a transaction.
-
-## Installation
-
-### Clone the Repository
 ```bash
 git clone <repository-url>
 cd <repository-directory>
 ```
 
-### Create a Virtual Environment
+### 2. Configure Environment Variables
+
+Create a `.env` file in the project root with the following variables:
+
+```
+
+POSTGRES_USER=flask_user
+POSTGRES_PASSWORD=securepass123
+POSTGRES_DB=flask_database_2
+FLASK_DEBUG=development 
+```
+
+### 3. Start the Application
+
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+docker-compose up --build -d
 ```
 
-### Install Dependencies
-```bash
-pip install -r requirements.txt
-```
-
-## Database Setup
-
-### Step 1: Open PostgreSQL in Terminal
-Run the following command to enter the PostgreSQL interactive shell as the `postgres` user:
-```bash
-psql -U postgres
-```
-*Note*: You may be prompted to enter the password for the `postgres` user if authentication is configured.
-
-### Step 2: Create a New User
-Inside the `psql` shell, create a new database user:
-```sql
-CREATE USER flask_user WITH PASSWORD 'securepass123';
-```
-
-### Step 3: Create a New Database
-Create a new database and grant the user full control:
-```sql
-CREATE DATABASE flask_database_2;
-GRANT ALL PRIVILEGES ON DATABASE flask_database_2 TO flask_user;
-ALTER DATABASE flask_database_2 OWNER TO flask_user;
-```
-
-### Step 4: Exit the PostgreSQL Shell
-Exit the `psql` shell by running:
-```sql
-\q
-```
-This will return you to your terminal.
-
-### Step 5: Set Up the `.env` File
-Create a `.env` file in your project directory and add the Database URL:
-```
-DATABASE_URL=postgresql://flask_user:securepass123@localhost:5432/flask_database_2
-```
-
-### Step 6: Test the Connection
-Test the database connection using:
-```bash
-psql -U flask_user -d flask_database_2 -h localhost -W
-```
-Enter the password (`securepass123`). If you see the `flask_database_2=#` prompt, your setup is working.
-
-## Running the Application
-
-Run the Flask application:
-```bash
-python app.py
-```
 The API will be available at `http://localhost:5000/`.
 
-## Testing
+## API Endpoints
 
-Run the tests using pytest:
+### Users
+- `POST /users/`: Create a new user
+- `GET /users/`: List all users
+- `GET /users/<id>`: Get user details
+- `PUT /users/<id>`: Update user information
+- `DELETE /users/<id>`: Delete a user
+
+### Accounts
+- `POST /accounts/`: Create a new account
+- `GET /accounts/`: List all accounts
+- `GET /accounts/<id>`: Get account details with current balance
+- `PUT /accounts/<id>`: Update account information
+- `DELETE /accounts/<id>`: Delete an account
+
+### Transactions
+- `POST /transactions/`: Create a new transaction with entries
+- `GET /transactions/`: List all transactions
+- `GET /transactions/<id>`: Get transaction details with entries
+- `PUT /transactions/<id>`: Update transaction description
+- `DELETE /transactions/<id>`: Delete a transaction
+
+## Running Tests
+
+### Access the App Container
+
+```bash
+docker-compose exec app bash
+```
+
+### Run Tests
+
 ```bash
 pytest
 ```
 
----
+## Testing Tools
+
+### Postman
+Use Postman to test API endpoints by sending HTTP requests and inspecting responses.
+
+### pgAdmin
+Connect to the PostgreSQL database using credentials from the `.env` file to manage and explore data.
+
+## Project Structure
+
+```
+<repository-directory>/
+├── app.py              # Main Flask application
+├── config.py           # Configuration settings
+├── extensions.py       # Database initialization
+├── models.py           # Data models
+├── routes.py           # API routes
+├── test.py             # Test suite
+├── Dockerfile          # Docker configuration for the app
+├── docker-compose.yml  # Docker Compose configuration
+├── requirements.txt    # Python dependencies
+└── .env               # Environment variables (create manually)
+```
+
+## Notes
+
+- Ensure Docker Desktop is installed and running before starting the application or tests
+- The PostgreSQL container must be healthy before the app starts
+- Tests must be run inside the container to ensure the correct environment and database connection
 
